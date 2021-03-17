@@ -1,9 +1,92 @@
+/* Banderas */
+var capturar = false;
+
+/* Variables globales */
+var arrayAlumnos = [];
+var arrayCalificaciones = [];
+var posicion = 0;
+var tableData = "";
+
+/* Elementos */
+
+var buttonCapturar = document.getElementById("btnCapturar");
+var buttonLimpiar = document.getElementById("btnLimpiar");
+var buttonGuardar = document.getElementById("btnGuardar");
+
+var infoBox = document.getElementById("info");
+
+var textNombre = document.getElementById("nombre");
+var textCalificacion = document.getElementById("calificacion");
+
+var tableBody = document.getElementById("data");
+
+
+/* Eventos globales */
+
+buttonCapturar.addEventListener("click", function() {
+    capturar = !capturar;
+    capturarInfo();
+});
+
+buttonLimpiar.addEventListener("click", function() {
+    textNombre.value = "";
+    textCalificacion.value = "";
+});
+
+buttonGuardar.addEventListener("click", function() {
+    arrayAlumnos[posicion] = textNombre.value;
+    arrayCalificaciones[posicion] = textCalificacion.value;
+
+    tableData += `
+                <tr>
+                    <td>${posicion+1}</td>
+                    <td>${arrayAlumnos[posicion]}</td>
+                    <td>${arrayCalificaciones[posicion]}</td>
+                    <td>Sin definir</td>
+                </tr>
+                `
+    tableBody.innerHTML = tableData;
+
+    posicion++;
+    textNombre.value = "";
+    textCalificacion.value = "";
+    console.log(arrayAlumnos);
+    console.log(arrayCalificaciones);
+});
+
+
+
+/* Funciones */
+
+function test() {
+    alert("Funciona!");
+}
+
+function capturarInfo() {
+
+    if (capturar) {
+        infoBox.classList.remove("d-none");
+        infoBox.classList.add("d-block");
+        buttonCapturar.classList.remove("btn-outline-primary");
+        buttonCapturar.classList.add("btn-outline-danger");
+        buttonCapturar.innerHTML = "Dejar de capturar";
+    } else {
+        infoBox.classList.remove("d-block");
+        infoBox.classList.add("d-none");
+        buttonCapturar.classList.remove("btn-outline-danger");
+        buttonCapturar.classList.add("btn-outline-primary");
+        buttonCapturar.innerHTML = "Capturar";
+    }
+
+}
+
+
 $(document).ready(function() {
     //menu();
 
     //saludar();
 
-    calificaciones();
+    //calificaciones();
 });
 
 var opcion;
