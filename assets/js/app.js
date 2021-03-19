@@ -34,29 +34,53 @@ buttonLimpiar.addEventListener("click", function() {
 });
 
 buttonGuardar.addEventListener("click", function() {
-    arrayAlumnos[posicion] = textNombre.value;
-    arrayCalificaciones[posicion] = textCalificacion.value;
+    if (textCalificacion.value == "" || textNombre.value == "") {
+        alert("Completa todos los campos");
+    } else if (Number(textCalificacion.value) <= 0 || (Number(textCalificacion.value) > 10)) {
+        alert("Ingresa una calificación del 1 al 10");
+    } else {
+        arrayAlumnos[posicion] = textNombre.value;
+        arrayCalificaciones[posicion] = textCalificacion.value;
+        var calificacion = tipoCalificacion(arrayCalificaciones[posicion]);
 
-    tableData += `
+        if (calificacion == "Reprobado") {
+            var clase = "text-danger";
+        }
+        if (calificacion == "Sobresaliente") {
+            var clase = "text-success";
+        }
+
+        tableData += `
                 <tr>
                     <td>${posicion+1}</td>
                     <td>${arrayAlumnos[posicion]}</td>
                     <td>${arrayCalificaciones[posicion]}</td>
-                    <td>Sin definir</td>
+                    <td class="${clase}">${calificacion}</td>
                 </tr>
-                `
-    tableBody.innerHTML = tableData;
+                `;
 
-    posicion++;
-    textNombre.value = "";
-    textCalificacion.value = "";
-    console.log(arrayAlumnos);
-    console.log(arrayCalificaciones);
+        tableBody.innerHTML = tableData;
+
+        posicion++;
+        textNombre.value = "";
+        textCalificacion.value = "";
+        console.log(arrayAlumnos);
+        console.log(arrayCalificaciones);
+    }
 });
 
 
 
 /* Funciones */
+function tipoCalificacion(calificacion) {
+    if (calificacion <= 5) {
+        return "Reprobado";
+    } else if (calificacion <= 8) {
+        return "Aprobado";
+    } else if (calificacion <= 10) {
+        return "Sobresaliente";
+    }
+}
 
 function test() {
     alert("Funciona!");
@@ -127,7 +151,7 @@ function saludar() {
     } while (saludar)
 }
 
-function calificaciones() {
+function calificaciones(calificacion) {
     var capturar = true;
     console.log("Programa para determinar calificaciones");
 
